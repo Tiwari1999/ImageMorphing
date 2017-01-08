@@ -29,10 +29,13 @@ def Perpendicular(vec):
 class Demo:
 
     def __init__(self, img1, img2, a, b, p):  # source, destination
-        self.img1 = cv2.resize(cv2.imread(img1), (300, 450))
-        self.img2 = cv2.resize(cv2.imread(img2), (300, 450))
-        #cv2.imwrite('alu_1.jpg', self.img1)
-        #cv2.imwrite('alu_2.jpg', self.img2)
+        #self.img1 = cv2.resize(cv2.imread(img1), (250, 340))
+        #self.img2 = cv2.resize(cv2.imread(img2), (250, 340))
+        self.img1 = cv2.imread(img1)
+        self.img2 = cv2.imread(img2)
+
+        #cv2.imwrite(img1, self.img1)
+        #cv2.imwrite(img2, self.img2)
         #exit()
         self.img1_ori = self.img1.copy()
         self.img2_ori = self.img2.copy()
@@ -271,7 +274,7 @@ class Demo:
                 cv2.destroyAllWindows()
         self._Morphing()
 
-test = Demo('alu_1.jpg', 'alu_2.jpg', 1, 2, 0)
+test = Demo('11.jpg', '12.jpg', 1, 2, 0)
 test.Run('GG', 'TT', 15)
 print 'origin data'
 # print test.line_1
