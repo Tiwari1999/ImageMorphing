@@ -18,8 +18,8 @@ def GetTransform(theta):
 
 def Perpendicular(vec):
     tmp = np.zeros(vec.shape, dtype=np.float32)
-    tmp[:, 0] = -vec[:, 1]
-    tmp[:, 1] = vec[:, 0]
+    tmp[:, 0] = vec[:, 1]
+    tmp[:, 1] = -vec[:, 0]
     s = np.sqrt(np.sum(tmp**2, axis=1).reshape([-1, 1]))
     s = matlib.repmat(s, 1, 2)
     #print s
@@ -67,8 +67,8 @@ class Demo:
                 self.draw_num_1 = 1
                 cv2.line(self.img1, (self.init_x_1, self.init_y_1),
                          (x, y), (0, 0, 255), thickness=3)
-                self.line_1[0].append([self.init_y_1, self.init_x_1])
-                self.line_1[1].append([y, x])
+                self.line_1[0].append([self.init_x_1, self.init_y_1])
+                self.line_1[1].append([x, y])
 
     def _DrawLine_2(self, event, x, y, flags, param):
         if event == cv2.EVENT_LBUTTONDOWN:
@@ -81,8 +81,8 @@ class Demo:
                 self.draw_num_2 = 1
                 cv2.line(self.img2, (self.init_x_2, self.init_y_2),
                          (x, y), (0, 0, 255), thickness=3)
-                self.line_2[0].append([self.init_y_2, self.init_x_2])
-                self.line_2[1].append([y, x])
+                self.line_2[0].append([self.init_x_2, self.init_y_2])
+                self.line_2[1].append([x, y])
 
     def _PlotFinish(self):
         if len(self.line_1[0]) != len(self.line_2[0]):
@@ -99,8 +99,8 @@ class Demo:
         height = self.img1_ori.shape[0]
         width = self.img1_ori.shape[1]
 
-        line_2 = self.line_1
-        line_1 = self.line_2
+        line_1 = self.line_1
+        line_2 = self.line_2
 
         start_1_map = line_1[0]
         start_2_map = line_2[0]
@@ -115,7 +115,7 @@ class Demo:
         #print loc_map[:5]
         #print loc_map[-5:]
         #exit()
-        img_lst = []
+        img_lst = [self._img1_name]
         repmat = matlib.repmat
         [a,b,p] = self._GetABP()
         for frame_index in range(self._frame_count-1):
@@ -144,7 +144,7 @@ class Demo:
                 Q_pron = repmat(end_1[line_index, :], width*height, 1)
                 P_pron = repmat(start_1[line_index, :], width*height, 1)
                 
-                Q_sub_P_pron = Q_pron - P_pron
+                Q_sub_P_pron = (Q_pron - P_pron)
                 Q_sub_P_pron_len = np.sqrt(np.sum(Q_sub_P_pron**2, axis=1))
                 X_pron = P_pron + repmat(U.reshape([-1,1]), 1, 2) * Q_sub_P_pron \
                         + repmat(V.reshape([-1,1]), 1, 2) * Perpendicular(Q_sub_P_pron) \
@@ -246,7 +246,7 @@ class Demo:
         s = ''
         for one in img_lst:
             s += '%s '%one
-        command = 'convert -delay 30 -loop 0 %s result.gif'%s
+        command = 'convert -delay 15 -loop 0 %s result.gif'%s
         os.system(command)
 
     def Run(self, window1, window2, frames):
@@ -268,8 +268,8 @@ class Demo:
                 cv2.destroyAllWindows()
         self._Morphing()
 
-test = Demo('7.jpg', '8.jpg', 1, 2, 0)
-test.Run('GG', 'TT', 20)
+test = Demo('1.jpg', '2.jpg', 1, 2, 0)
+test.Run('GG', 'TT', 10)
 print 'origin data'
 # print test.line_1
 # print test.line_2
