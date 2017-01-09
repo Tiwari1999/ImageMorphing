@@ -245,6 +245,7 @@ class Demo:
             img = img.reshape([height, width, -1]).astype(np.uint8)
             name = 'out_%d.jpg'%frame_index
             cv2.imwrite(name, img)
+            print '%s saved!'%name
             img_lst.append(name)
             #print np.max(W_sum)
             #print np.min(W_sum)
@@ -274,7 +275,7 @@ class Demo:
                 cv2.destroyAllWindows()
         self._Morphing()
 
-#test = Demo('11.jpg', '12.jpg', 1, 2, 0)
+#test = Demo('1.jpg', '2.jpg', 1, 2, 0)
 test = Demo('image/president_1.jpg', 'image/president_2.jpg', 1, 2, 0)
 test.Run('GG', 'TT', 15)
 print 'origin data'
