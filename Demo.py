@@ -274,7 +274,8 @@ class Demo:
                 cv2.destroyAllWindows()
         self._Morphing()
 
-test = Demo('11.jpg', '12.jpg', 1, 2, 0)
+#test = Demo('11.jpg', '12.jpg', 1, 2, 0)
+test = Demo('image/president_1.jpg', 'image/president_2.jpg', 1, 2, 0)
 test.Run('GG', 'TT', 15)
 print 'origin data'
 # print test.line_1
